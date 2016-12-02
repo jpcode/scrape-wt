@@ -24,20 +24,28 @@ var rl = readline.createInterface({
   terminal: false
 });
 
-rl.on('line', function(line){
-    var idx = parseInt(line);
-    if ( idx == -1 ) exit();
-    else if ( idx == 0 ) openFeed( scrape.url, scrape.desc  );
-    else{
-    	var feed = scrape.out.feeds[ idx - 1 ];
-	    if ( feed ){
-	    	openFeed( feed.href, feed.text );
-	    }else{
-	    	log(' Please select a correct option!!!!!!!', 'error');
-	    }
-    }
-})
 
+function initStdin(){
+	rl.on('line', function(line){
+		if ( line == 'r' ) refresh();
+	    var idx = parseInt(line);
+	    if ( idx == -1 ) exit();
+	    else if ( idx == 0 ) openFeed( scrape.url, scrape.desc  );
+	    else if ( idx == 'r' ) refresh();
+	    else{
+	    	var feed = scrape.out.feeds[ idx - 1 ];
+		    if ( feed ){
+		    	openFeed( feed.href, feed.text );
+		    }else{
+		    	log(' Please select a correct option!!!!!!!', 'error');
+		    }
+	    }
+	})
+}
+
+function refresh(){
+	log('refresh', 'green');
+}
 
 function exit( ){
 	log(' Thanks!! Bye', 'title');
@@ -61,27 +69,36 @@ function log( msg, type ){
 	else if ( type == "error" ) console.log( colors.red( msg ));
 }
 
-request( scrape.url, function (error, response, html) {
-  if (!error && response.statusCode == 200) {
-  	log('Current List from: ' +  scrape.url , 'title' );
-    var $ = cheerio.load(html);
-    var ind;
-    $('a.bg h2').each(function(i, element){
-    	var href = $(this).parent().attr('href');
-    	var text = $(this).text();
-    	ind = i + 1;
-    	log( ind + " - " + text, "list");
-    	scrape.out.feeds.push({
-    		id : i,
-    		href: href,
-    		text: text
-    	});
-    });
-    log( ">>>>>>>>>>>>>>>>>>>>>>>>", "separators" );
-    log( ' ' + 0   + " -> Go Home Page", "action");
-    log( -1  + " -> Exit or Ctrl + c", "action");
-    log( ">>>>>>>>>>>>>>>>>>>>>>>>", "separators" );
-    log('Type One Feed to open or put 0 and get out here....', "action");
+function makeRequest( url ){
+	request( url, function (error, response, html) {
+	  if (!error && response.statusCode == 200) {
+	  	initStdin();
+	  	log('Current List from: ' +  scrape.url , 'title' );
+	    var $ = cheerio.load(html);
+	    var ind;
+	    $('a.bg h2').each(function(i, element){
+	    	var href = $(this).parent().attr('href');
+	    	var text = $(this).text();
+	    	ind = i + 1;
+	    	log( ind + " - " + text, "list");
+	    	scrape.out.feeds.push({
+	    		id : i,
+	    		href: href,
+	    		text: text
+	    	});
+	    });
+	    log( ">>>>>>>>>>>>>>>>>>>>>>>>", "separators" );
+	    log( ' ' + 0   + " -> Go Home Page", "action");
+	    log( -1  + " -> Exit or Ctrl + c", "action");
+	    log( ' ' + 'r'   + " -> Refresh", "action");
+	    log( ">>>>>>>>>>>>>>>>>>>>>>>>", "separators" );
+	    log('Type One Feed to open or put 0 and get out here....', "action");
+	  }else{
+	  	log( "An error ocurred with your feed :(", "error" );
+	  	exit();
+	  }
+	});
+}
 
-  }
-});
+makeRequest( scrape.url );
+
