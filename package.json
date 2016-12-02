@@ -1,0 +1,31 @@
+{
+  "name": "scrape-wt",
+  "version": "1.0.0",
+  "description": "Simple Scrape fow own convenience",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpcode/scrape-wt.git"
+  },
+  "keywords": [
+    "scraper"
+  ],
+  "author": "@jpcode",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpcode/scrape-wt/issues"
+  },
+  "homepage": "https://github.com/jpcode/scrape-wt#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "colors": "^1.1.2",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.8.3",
+    "node-jsdom": "^3.1.5",
+    "request": "^2.79.0"
+  }
+}
