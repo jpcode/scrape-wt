@@ -1,5 +1,5 @@
 # scrape-wt
-Simple Scrape for own convenience.
+Simple Node.js Scrape 
 
 Using cheerio to scrape a web in this case as example i'll take: http://utero.pe feeds/news site.
 
