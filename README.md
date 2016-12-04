@@ -1,10 +1,10 @@
 # scrape-wt
 Simple Scrape for own convenience.
 
-## Test on Windows
+## Test
+Windows SO.
 
 ## Steps
- ### npm install
- ### npm start
-
+ - npm install
+ - npm start
 
