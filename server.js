@@ -27,24 +27,29 @@ var rl = readline.createInterface({
 
 function initStdin(){
 	rl.on('line', function(line){
-		if ( line == 'r' ) refresh();
-	    var idx = parseInt(line);
-	    if ( idx == -1 ) exit();
-	    else if ( idx == 0 ) openFeed( scrape.url, scrape.desc  );
-	    else if ( idx == 'r' ) refresh();
-	    else{
-	    	var feed = scrape.out.feeds[ idx - 1 ];
-		    if ( feed ){
-		    	openFeed( feed.href, feed.text );
-		    }else{
-		    	log(' Please select a correct option!!!!!!!', 'error');
+		console.log( line );
+		if ( line == 'r' ){ 
+			console.log('doing r');
+			refresh()
+		}else{
+			var idx = parseInt(line);
+		    if ( idx == -1 ) exit();
+		    else if ( idx == 0 ) openFeed( scrape.url, scrape.desc  );
+		    else{
+		    	var feed = scrape.out.feeds[ idx - 1 ];
+			    if ( feed ){
+			    	openFeed( feed.href, feed.text );
+			    }else{
+			    	log(' Please select a correct option!!!!!!!', 'error');
+			    }
 		    }
-	    }
+		}
+	    
 	})
 }
 
 function refresh(){
-	log('refresh', 'green');
+	log('refresh', 'title');
 }
 
 function exit( ){
