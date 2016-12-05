@@ -7,7 +7,7 @@ I'll create a list of the main feeds and menu option to open in a browser the fe
 
 
 ## Test
-Windows SO.
+Windows SO / MacOs
 
 ## Steps
  - npm install
